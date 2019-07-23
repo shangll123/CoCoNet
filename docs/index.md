@@ -18,7 +18,7 @@ md_document:
 variant: markdown_github
 ---
 
-![CoCoNet\ Schematic Overview](pipline.png)
+![CoCoNet\ Schematic Overview](Figure1.tiff)
 
 ## CoCoNet
 
