@@ -35,7 +35,7 @@ if(max_path == 1){
 	result$sigma2_2 = res$par[3]
 	result$rho = res$par[2]/(res$par[1]+res$par[2])
 	return(result)
-}else if(max_path == 2){
+}else if(max_path == 3){
 	y = scale(gene_effect_size) 
 	A = adjacency_mat
 	A2 = t(A)%*%A 
@@ -50,7 +50,7 @@ if(max_path == 1){
 	result$sigma2_3 = res$par[4]
 	result$rho = res$par[2]/(res$par[1]+res$par[2])
 	return(result)
-}else if(max_path == 2){
+}else if(max_path == 4){
 	y = scale(gene_effect_size) 
 	A = adjacency_mat
 	A2 = t(A)%*%A 
