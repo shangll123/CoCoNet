@@ -3,14 +3,14 @@ layout: page
 title: About
 permalink: /about/
 ---
-`SPARK` is for statistical method for identifying spatial expression patterns. SPARK directly models raw count data generated from various spatial resolved transcriptomic techniques. With a new efficient penalized quasi-likelihood based algorithm, SPARK is scalable to data sets with tens of thousands of genes measured on tens of thousands of samples. 
+Genome-wide association studies (GWASs) have identified many SNPs associated with various common diseases. Understanding the biological functions of these identified SNP associations requires identifying disease/trait relevant tissues or cell types. Here, we develop a network method, CoCoNet, to facilitate the identification of trait-relevant tissues or cell types. 
 
-Importantly, SPARK relies on newly developed statistical formulas for hypothesis testing, producing well-calibrated p-values and yielding high statistical power. We illustrate the benefits of SPARK through extensive simulations and in-depth analysis of four published spatially resolved transcriptomic data sets. In the real data applications, SPARK is to 10-fold more powerful than existing approaches and identifies new genes that reveal the importance of neuronal migration in the formation of the olfactory system as well as the importance of immune system and cytoskeleton stability in tumor progression and metastasis.
+Different from existing approaches, CoCoNet incorporates tissue-specific gene co-expression networks constructed from either bulk or single cell RNA sequencing (RNAseq) studies with GWAS data for trait-tissue inference. In particular, CoCoNet relies on a covariance regression network model to express gene-level effect sizes for the given GWAS trait as a function of the tissue-specific co-expression adjacency matrix. With a composite likelihood-based inference algorithm, CoCoNet is scalable to tens of thousands of genes. 
 
-Cite `SPARK`
+Cite `CoCoNet`
 -------------------
-Shiquan Sun, Jiaqiang Zhu and Xiang Zhou. *Statistical Analysis of Spatial Expression Pattern for Spatially Resolved Transcriptomic Studies*, 2019. 
+Lulu Shang,Jennifer A. Smith, and Xiang Zhou. *Leveraging Gene Co-expression Patterns to Infer Trait-Relevant Tissues in Genome-wide Association Studies*, 2019. 
 
-Our group
+Lab Website
 -------------------
 [www.xzlab.org](https://www.xzlab.org/)
