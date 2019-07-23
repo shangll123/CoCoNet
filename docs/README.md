@@ -1,5 +1,0 @@
-## CoCoNet
-
-**CoCoNet** 
-
-
