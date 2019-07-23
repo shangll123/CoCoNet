@@ -6,8 +6,8 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 #
 layout: home
-author: "Shiquan Sun, Jiaqiang Zhu and Xiang Zhou"
-date: '2019-06-08'
+author: "Lulu Shang, Jennifer A. Smith and Xiang Zhou"
+date: '2019-07-17'
 fontsize: 10pt
 linkcolor: blue
 mainfont: Times
@@ -18,85 +18,52 @@ md_document:
 variant: markdown_github
 ---
 
-![SPARK\_pipeline](pipline.png)
+![CoCoNet\ Schematic Overview](pipline.png)
 
-## SPARK
+## CoCoNet
 
-**SPARK** is an efficient method to identify genes with spatial expression pattern. The intended applications are spatially resolved RNA-sequencing from e.g., Spatial Transcriptomics, or *in situ* gene expression measurements from
-e.g., SeqFISH, or Merfish.
+**CoCoNet** is an efficient method to facilitate the identification of trait-relevant tissues or cell types. We apply CoCoNet for an in-depth analysis of four neurological disorders and four autoimmune diseases, where we integrate the corresponding GWASs with bulk RNAseq data from 38 tissues and single cell RNAseq data from 10 cell types. 
 
 
-## Example: Breast Cancer Data
+## Example: GTEx tissues in GWAS trait BIPSCZ
 
-Load the `SPARK` package and Breast cancer data set, which can be downloaded [here](https://github.com/xzhoulab/SPARK/blob/master/data/Layer2_BC_Count.rds).
+Load the `CoCoNet` package and data, which can be downloaded from this google drive [here](https://drive.google.com/open?id=1XkyFp8_k1FLoYiaL_PYjYzusYoc8Lwz_).
 ```R
-    library('SPARK')
-    load("./Layer2_BC_Count.rds")
-     
+    library('CoCoNet')
+    load("tissue_net.RData")
+    load("tissue_name.RData")
+    load("outcome_tissue_scale.RData")
 ```
-View the expression count matrix `rawcount`, each row denotes a gene and each column represents a cell/spot.
+
+In total we have 38 tissues, the network are ordered by the tissue names
 ```R
-rawcount[1:5,1:5]
-
-    17.907x4.967   18.965x5.003   18.954x5.995    17.846x5.993 20.016x6.019
-GAPDH   1   7   5   1   2
-USP4    1   0   0   0   0
-MAPKAPK2    1   1   0   0   1
-CPEB1   0   0   0   0   0
-LANCL2  0   0   0   0   0
+> tissue_name
+ [1] "Adipose_subcutaneous"      "Adipose_visceral"         
+ [3] "Adrenal_gland"             "Artery_aorta"             
+ [5] "Artery_coronary"           "Artery_tibial"            
+ [7] "Brain_other"               "Brain_cerebellum"         
+ [9] "Brain_basal_ganglia"       "Breast"                   
+[11] "Lymphoblastoid_cell_line"  "Fibroblast_cell_line"     
+[13] "Colon_sigmoid"             "Colon_transverse"         
+[15] "Gastroesophageal_junction" "Esophagus_mucosa"         
+[17] "Esophagus_muscularis"      "Heart_atrial_appendage"   
+[19] "Heart_left_ventricle"      "Kidney_cortex"            
+[21] "Liver"                     "Lung"                     
+[23] "Minor_salivary_gland"      "Skeletal_muscle"          
+[25] "Tibial_nerve"              "Ovary"                    
+[27] "Pancreas"                  "Pituitary"                
+[29] "Prostate"                  "Skin"                     
+[31] "Intestine_terminal_ileum"  "Spleen"                   
+[33] "Stomach"                   "Testis"                   
+[35] "Thyroid"                   "Uterus"                   
+[37] "Vagina"                    "Whole_blood"  
 ```
-
-Extract the annotation information for each sample, i.e., location or coordinates
-```R   
-    ## extract the coordinates from the rawdata
-    info <- cbind.data.frame(x=as.numeric(sapply(strsplit(colnames(rawcount),split="x"),"[",1)),
-                             y=as.numeric(sapply(strsplit(colnames(rawcount),split="x"),"[",2)),
-                             total_counts=apply(rawcount,2,sum))
-    rownames(info) <- colnames(rawcount)
+The first tissue is "Adipose_subcutaneous", which looks like this:
 ```
-Create a SPARK object for analysis. This step excludes the gene that are lowly expressed.
-```R 
-    ## filter genes and cells/spots and 
-    spark <- CreateSPARKObject(counts=rawcount, 
-                                 location=info[,1:2],
-                                 percentage = 0.1, 
-                                 min_total_counts = 10)
-
-    ## total counts for each cell/spot
-    spark@lib_size <- apply(spark@counts, 2, sum)
-
-    ## Take the first ten genes as an example
-    #spark@counts   <- spark@counts[1:10,]
-```
-
-Fit the statistical model under the null hypothesis.
-```R 
-    ## Estimating Parameter Under Null
-    spark <- spark.vc(spark, 
-                       covariates = NULL, 
-                       lib_size = spark@lib_size, 
-                       num_core = 5,
-                       verbose = F)
-```
-
-Test the spatially expressed pattern genes. By default, the kernel matrices are computed automatically by coordinates, and check the positive definition of the kernel matrices. There is also an option to provide a kernel matrix by user.
-```R 
-    ## Calculating pval
-    spark <- spark.test(spark, 
-                         check_positive = T, 
-                         verbose = F)
-    
-```
-
-Output the final results, i.e., combined p-values, adjusted p-values, etc. 
-```R 
-head(spark@res_mtest[,c("combined_pvalue","adjusted_pvalue")])
-
-    combined_pvalue   adjusted_pvalue
-GAPDH   7.477171e-09    4.233403e-06
-MAPKAPK2    1.016078e-01    1.000000e+00
-MCL1    1.149519e-08    6.078909e-06
-TMEM109 4.303998e-01    1.000000e+00
-TMEM189 6.189064e-01    1.000000e+00
-ITPK1   7.213287e-01    1.000000e+00
+> tissue_net[[1]][1:4,1:4]
+                ENSG00000106546 ENSG00000160224 ENSG00000156150 ENSG00000052850
+ENSG00000106546               0               0               0               0
+ENSG00000160224               0               0               0               0
+ENSG00000156150               0               0               0               0
+ENSG00000052850               0               0               0               0
 ```
