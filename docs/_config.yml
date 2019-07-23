@@ -1,17 +1,15 @@
 # following https://github.com/jekyll/minima
-title: SPARK
-author: Shiquan Sun, Jiaqiang Zhu and Xiang Zhou
-email: shiquans@umich.edu jiaqiang@umich.edu xzhousph@umich.edu
-description: Spatial PAttern Recognition via Kernels
+title: CoCoNet
+author: Lulu Shang, Xiang Zhou
+email: shanglu@umich.edu xzhousph@umich.edu
+description: Composite likelihood-based Covariance regression Network model
 
-# Minima date format
-# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
 minima:
 date_format: "%b %-d, %Y"
 
 # generate social links in footer
 social_links:
-github: xzhoulab
+github: shangll123
 rss: rss
 # dribbble: jekyll
 # facebook: jekyll
